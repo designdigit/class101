@@ -1,0 +1,93 @@
+1) Main Font
+
+
+desktop
+
+font-size: 1.1em;
+
+
+@media only screen and (max-width: 1023px) {
+
+font-size: 1.5em;
+
+
+@media only screen and (max-width: 767px) {
+
+font-size: 2.5em;
+
+
+@media only screen and (max-width: 540px) {
+
+font-size: 3.5em;
+
+
+
+2) Title Font1
+
+
+desktop
+
+font-size: 1.25em;
+
+
+@media only screen and (max-width: 1023px) {
+
+font-size: 2em;
+
+
+@media only screen and (max-width: 767px) {
+
+font-size: 3em;
+
+
+@media only screen and (max-width: 540px) {
+
+font-size: 4em;
+
+
+
+3) Title Font2
+
+
+desktop
+
+font-size: 1.75em;
+
+
+@media only screen and (max-width: 1023px) {
+
+font-size: 3em;
+
+
+@media only screen and (max-width: 767px) {
+
+font-size: 3.5em;
+
+
+@media only screen and (max-width: 540px) {
+
+font-size: 4em; or font-size: 5em;
+
+
+
+4) Title Font3
+
+
+desktop
+
+font-size: 3em;
+
+
+@media only screen and (max-width: 1023px) {
+
+font-size: 4em;
+
+
+@media only screen and (max-width: 767px) {
+
+font-size: 4.5em;
+
+
+@media only screen and (max-width: 540px) {
+
+font-size: 5em;
