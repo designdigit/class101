@@ -4,13 +4,13 @@ window.addEventListener("load", function(){
 	lenis.on("scroll", ScrollTrigger.update);
 
 	gsap.ticker.add(function(time){
-		lenis.raf(time*1000)
+		lenis.raf(time*1000);
 	});
 
 	gsap.ticker.lagSmoothing(0);
 
-	let customCursor1=document.querySelector(".curser-wrap");
-	let customCursor2=document.querySelector(".curser-wrap .cursor");
+	let customCursor1=document.querySelector(".cursor-wrap");
+	let customCursor2=document.querySelector(".cursor-wrap .cursor");
 	let mouseEvent=document.querySelectorAll(".mouse-event");
 
 	document.addEventListener("mousemove", function(e){
@@ -36,8 +36,8 @@ window.addEventListener("load", function(){
 
 	const mouseTl=gsap.timeline({ paused: true });
 
-	mouseTl.to(".curser-wrap i", { opacity: 1, duration: 0.3 })
-	.to(".curser-wrap .view-more", { opacity: 1, duration: 0.3 });
+	mouseTl.to(".cursor-wrap i", { opacity: 1, duration: 0.3 })
+	.to(".cursor-wrap .view-more", { opacity: 1, duration: 0.3 });
 
 	mouseEvent.forEach(function(item){
 		item.addEventListener("mouseenter", function(){
@@ -56,7 +56,9 @@ window.addEventListener("load", function(){
 	tab.addEventListener("click", function(e){
 		e.preventDefault();
 
-		if(tabFlag == true) return;
+		if(tabFlag == true){
+			return;
+		}
 
 		tabFlag=true;
 
@@ -104,21 +106,7 @@ window.addEventListener("load", function(){
 		item.addEventListener("click", function(e){
 			e.preventDefault();
 
-			let targety;
-
-			switch(i){
-				case 3 :
-					targety=pageList[2].offsetTop+pageList[2].clientHeight-(window.innerHeight/30); // GSAP Pin option
-					break;
-				case 4 :
-					targety=pageList[4].offsetTop; // end: "+="+1200,
-					break;
-				default :
-					targety=pageList[i].offsetTop;
-					break;
-			}
-
-			// console.log(i, targety);
+			let targety=pageList[i].offsetTop;
 
 			gsap.to(window, { scrollTo: targety, duration: 0.5 });
 		});
@@ -138,18 +126,12 @@ window.addEventListener("load", function(){
 				let targety;
 
 				switch(i){
-					case 0 :
-						targety=0; // GSAP Pin option
-						break;
-					case 3 :
-						targety=pageList[2].offsetTop+pageList[2].clientHeight+(window.innerHeight/30); // GSAP Pin option
-						break;
-					default :
-						targety=pageList[i].offsetTop-(window.innerHeight/30);
-						break;
+					case 1 : targety=pageList[i].offsetTop-window.innerHeight/15; break;
+					case 2 : targety=pageList[i].offsetTop-window.innerHeight/15; break;
+					case 3 : targety=pageList[i].offsetTop-window.innerHeight/5; break;
+					case 4 : targety=pageList[i].offsetTop-window.innerHeight/12; break;
+					default : targety=pageList[i].offsetTop;
 				}
-
-				// console.log(i, targety);
 
 				gsap.to(window, { scrollTo: targety, duration: 0.5 });
 			}});
@@ -167,7 +149,7 @@ window.addEventListener("load", function(){
 		opacity: 1,
 		duration: 0.3,
 		stagger: 0.03,
-		ease: "power3.out"
+		ease: Power3.easeOut
 	}, "time2");
 
 	mainTl.fromTo(".main-title .description span", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1, stagger: 0.5 }, "time2+=1");
@@ -177,8 +159,7 @@ window.addEventListener("load", function(){
 	const introTl=gsap.timeline({
 		scrollTrigger: {
 			trigger: "#about",
-			start: "top center",
-			// markers: true
+			start: "top center"
 		}
 	});
 
@@ -192,8 +173,7 @@ window.addEventListener("load", function(){
 		duration: 0.5,
 		scrollTrigger: {
 			trigger: "#skills",
-			start: "top center",
-			// markers: true
+			start: "top center"
 		}
 	});
 
@@ -204,93 +184,56 @@ window.addEventListener("load", function(){
 			duration: 0.5,
 			scrollTrigger: {
 				trigger: item,
-				start: "top 80%",
-				// markers: true
+				start: "top 80%"
 			}
 		});
 	});
 
 	const mediaQuery=gsap.matchMedia();
 
-	let portfolioTl, updatePortfolioHeight, portfolioHeight;
-
 	mediaQuery.add("(min-width: 768px)", function(){
 		gsap.from(".comment .aosup", {
 			y: 100,
 			opacity: 0,
-			duration: 0.8,
+			duration: 1,
 			scrollTrigger: {
 				trigger: ".comment",
-				start: "top 50%",
-				// markers: true
+				start: "top center"
 			}
 		});
 
-		portfolioTl=gsap.timeline({
+		gsap.from(".portfolioSwiper", {
+			y: 100,
+			opacity: 0,
+			duration: 1,
 			scrollTrigger: {
-				trigger: "#portfolio",
-				scrub: true,
-				pin: true,
-				start: "top top",
-				end: "+="+1200,
-				// markers: true
+				trigger: ".portfolioSwiper",
+				start: "top center"
 			}
 		});
-
-		portfolioHeight=document.querySelector(".portfolioSwiper").getBoundingClientRect().height;
-
-		updatePortfolioHeight=function(){
-			portfolioTl.fromTo(".portfolioSwiper", { display: "none", height: 0 }, { display: "block", height: portfolioHeight });
-		}
-
-		updatePortfolioHeight();
 	});
 
 	mediaQuery.add("(max-width: 767px)", function(){
 		gsap.from(".comment .aosup", {
-			y: 300,
-			opacity: 0.6,
-			duration: 1.5,
+			y: 50,
+			opacity: 0,
+			duration: 0.5,
 			scrollTrigger: {
 				trigger: ".comment",
-				scrub: true,
-				start: "top 70%",
-				// markers: true
+				start: "top center"
+			}
+		});
+
+		gsap.from(".portfolioSwiper", {
+			y: 50,
+			opacity: 0,
+			duration: 0.5,
+			scrollTrigger: {
+				trigger: ".portfolioSwiper",
+				start: "top center"
 			}
 		});
 	});
-
-	window.addEventListener("resize", function(){
-		let prevPortfolioHeight;
-
-		if(window.innerWidth >= 1024){
-			if(prevPortfolioHeight != portfolioHeight){
-				prevPortfolioHeight=480;
-				portfolioHeight=prevPortfolioHeight;
-			}
-		}
-		else if(window.innerWidth >= 768){
-			if(prevPortfolioHeight != portfolioHeight){
-				prevPortfolioHeight=400;
-				portfolioHeight=prevPortfolioHeight;
-			}
-		}
-
-		portfolioTl.clear();
-		updatePortfolioHeight();
-	});
-
-	const opensourceTl=gsap.timeline({
-		scrollTrigger: {
-			trigger: "#open-source",
-			start: "top center",
-			// markers: true
-		}
-	});
-
-	opensourceTl.from("#open-source .title", { y: 20, opacity: 0, duration: 0.5 });
-
-	opensourceTl.from("#open-source .content", { y: 20, opacity: 0, duration: 2 });
 
 	new Swiper(".portfolioSwiper", {
 		slidesPerView: 1,
@@ -311,6 +254,17 @@ window.addEventListener("load", function(){
 		}
 	});
 
+	const opensourceTl=gsap.timeline({
+		scrollTrigger: {
+			trigger: "#open-source",
+			start: "top center"
+		}
+	});
+
+	opensourceTl.from("#open-source .title", { y: 20, opacity: 0, duration: 0.5 });
+
+	opensourceTl.from("#open-source .content", { y: 20, opacity: 0, duration: 2 });
+
 	new Swiper("#open-source .swiper", {
 		loop: true,
 		speed: 2000,
@@ -321,11 +275,11 @@ window.addEventListener("load", function(){
 			delay: 2000
 		},
 		breakpoints: {
-			769: {
+			768: {
 				slidesPerView: 3,
 				spaceBetween: 20
 			},
-			1025: {
+			1024: {
 				slidesPerView: 4.5,
 				spaceBetween: 15
 			}
